@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\ExceptionReport;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response as BaseResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +42,27 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    /**
+     * @param $request
+     * @param Throwable $e
+     * @return Response|JsonResponse|BaseResponse
+     * @throws Throwable
+     */
+    public function render($request, Throwable $e): Response|JsonResponse|BaseResponse
+    {
+        if ($request->ajax() || Str::startsWith($request->path(), 'api')) {
+            $report = ExceptionReport::make($e);
+            if ($report->shouldReturn()) {
+                return $report->report();
+            }
+            if(env('APP_DEBUG')){
+                return parent::render($request, $e);
+            }else{
+                return $report->prodReport();
+            }
+        }
+        return parent::render($request, $e);
     }
 }
