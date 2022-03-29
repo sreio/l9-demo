@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Example\ExampleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("/test", function (){
-    return response()->json(['code' => 0, 'message' => "success"]);
-});
+Route::post('/register', [AuthController::class, 'register']); //注册
+Route::post('/login', [AuthController::class, 'login']); //登陆
+
 
 // 示例
 Route::namespace('Example')->prefix('example')->group(function (){

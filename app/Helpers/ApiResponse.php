@@ -4,15 +4,15 @@ namespace App\Helpers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Response;
-use Symfony\Component\HttpFoundation\Response as BaseResponse;
 
 trait ApiResponse
 {
 
     /**
+     * Normal return resources, whose default value is 0.
      * @var int
      */
-    protected int $statusCode = BaseResponse::HTTP_OK;
+    protected int $statusCode = HttpCode::SUCCESS_OK;
 
     /**
      * @param int|null $code
@@ -82,7 +82,7 @@ trait ApiResponse
      * @param string $status
      * @return JsonResponse
      */
-    public function failed($msg, int $code = BaseResponse::HTTP_BAD_REQUEST, string $status = 'error'): JsonResponse
+    public function failed($msg, int $code = HttpCode::FAILED_ERROR, string $status = 'error'): JsonResponse
     {
         return $this->setStatusCode($code)->status($status, compact('msg'));
     }

@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Example;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use JetBrains\PhpStorm\ArrayShape;
@@ -10,9 +11,10 @@ class ExampleController extends Controller
 {
     #[ArrayShape(['request' => "array", 'auth' => "array"])] public function test(Request $request): array
     {
+        $sql = User::query()->where('name', 'like', "%w%")->get();
         $params = $request->all();
         $auth = ['By' => 'sreio' , 'sex' => 1];
-        return ['request' => $params, 'auth' => $auth];
+        return ['request' => $params, 'auth' => $auth, 'sql' => $sql];
     }
 
     public function test2(): bool
