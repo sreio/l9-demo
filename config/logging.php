@@ -114,6 +114,25 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'db' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/db/db.log'),
+            'level' => 'info',
+            'days' => 14,
+        ],
+        'slow_db' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/slow/slow_db.log'),
+            'level' => 'debug',
+            'days' => 7,
+        ],
+        'slow_url' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/slow/slow_url.log'),
+            'level' => 'debug',
+            'days' => 7,
+        ],
     ],
 
 ];

@@ -45,6 +45,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Listen Mode
+    |--------------------------------------------------------------------------
+    |
+    | Whether to turn on listening to slow SQL logs or slow request logs, the default is off.
+    | If you need to query the slow SQL log, you need to turn on the listening SQL.
+    | listen_db             :  Whether to listen to SQL.
+    | listen_slow_db        :  Whether to listen to slow SQL.
+    | listen_slow_db_time   :  Need to record the execution time of slow SQL in milliseconds.
+    | listen_slow_url       :  Whether to listen to slow requests.
+    | listen_slow_url_time  :  Need to record the execution time of slow requests in milliseconds.
+    |
+    */
+
+    'listen_db' => env('LISTEN_DB', false),
+    'listen_slow_db' => env('LISTEN_SLOW_DB', false),
+    'listen_slow_db_time' => env('LISTEN_SLOW_DB_TIME', 1000),
+    'listen_slow_url' => env('LISTEN_SLOW_URL', false),
+    'listen_slow_url_time' => env('LISTEN_SLOW_URL_TIME', 1000),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |
