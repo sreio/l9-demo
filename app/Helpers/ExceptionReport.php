@@ -1,7 +1,10 @@
 <?php
 namespace App\Helpers;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -41,9 +44,13 @@ class ExceptionReport
      */
     public array $doReport = [
         ModelNotFoundException::class => ['模型未找到', 404],
-        ValidationException::class => ['参数验证错误', 422],
-        NotFoundHttpException::class => ['接口不存在', 404],
+        ValidationException::class => [],
+        NotFoundHttpException::class => ['没有找到该页面', 404],
         MethodNotAllowedHttpException::class => ['访问方式不正确', 405],
+        AuthenticationException::class => ['未授权', 401],
+        AuthorizationException::class => ['没有此权限', 403],
+        QueryException::class => ['参数错误', 401],
+
     ];
 
     /**
