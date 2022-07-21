@@ -3,6 +3,7 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
+define('LARAVEL_START_MEMORY', memory_get_usage());
 
 /*
 |--------------------------------------------------------------------------

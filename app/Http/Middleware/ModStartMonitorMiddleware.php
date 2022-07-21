@@ -27,4 +27,26 @@ class ModStartMonitorMiddleware
         }
         return $next($request);
     }
+
+    public function terminate($request, $response): void
+    {
+        // 测试
+        if (app()->runningUnitTests()) {
+            return;
+        }
+        $data = [
+            'ip' => $request->ip(),
+            'request_data' => $request->all(),
+            'response_data' => [], // config('app.env') === 'local' ? $response : null, // 内容太大了 线上就不存储了
+            'ms' => round(((microtime(true) - LARAVEL_START)) * 1000, 2),
+            'memory' => round(
+                (memory_get_usage() - LARAVEL_START_MEMORY) / 1024 / 1024,
+                2
+            ),
+            'headers' => $request->headers->all(),
+            'request_uri' => $request->getRequestUri(),
+            'code' => $response->getStatusCode(),
+        ];
+        app('log')->channel('slow_url')->info(json_encode($data));
+    }
 }
