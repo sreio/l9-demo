@@ -95,15 +95,13 @@ class Es extends BaseComponents
      * 获取文档
      * @param int $id
      * @param string $index_name
-     * @param string $type_name
      * @return mixed
      * @throws Exception
      */
-    public function getDoc(int $id = 1, string $index_name = 'test_ik', string $type_name = 'goods'): mixed
+    public function getDoc(int $id = 1, string $index_name = 'test_ik'): mixed
     {
         $params = [
             'index' => $index_name,
-            'type' => $type_name,
             'id' => $id
         ];
         return $this->callback(function () use ($params){
@@ -115,15 +113,13 @@ class Es extends BaseComponents
      * 判断文档存在
      * @param int $id
      * @param string $index_name
-     * @param string $type_name
      * @return mixed
      * @throws Exception
      */
-    public function existsDoc(int $id = 1, string $index_name = 'test_ik', string $type_name = 'test_type'): mixed
+    public function existsDoc(int $id = 1, string $index_name = 'test_ik'): mixed
     {
         $params = [
             'index' => $index_name,
-            'type' => $type_name,
             'id' => $id
         ];
         return $this->callback(function () use ($params){
@@ -136,20 +132,18 @@ class Es extends BaseComponents
      * @param $id
      * @param array $doc ['id'=>100, 'title'=>'phone']
      * @param string $index_name
-     * @param string $type_name
      * @return mixed
      * @throws Exception
      */
-    public function addDoc($id, array $doc, string $index_name = 'test_ik', string $type_name = 'test_type'): mixed
+    public function addDoc($id, array $doc, string $index_name = 'test_ik'): mixed
     {
         $params = [
             'index' => $index_name,
-            'type' => $type_name,
             'id' => $id,
             'body' => $doc
         ];
         return $this->callback(function () use ($params){
-            return $this->client->index($params)->getStatusCode() === 200;
+            return $this->client->index($params)->getStatusCode() === 201;
         });
     }
 
@@ -157,17 +151,15 @@ class Es extends BaseComponents
      * 更新文档
      * @param int $id
      * @param string $index_name
-     * @param string $type_name
      * @param array $body ['doc' => ['title' => '苹果手机iPhoneX']]
      * @return mixed
      * @throws Exception
      */
-    public function updateDoc(int $id = 1, array $body=[], string $index_name = 'test_ik', string $type_name = 'test_type'): mixed
+    public function updateDoc(int $id = 1, array $body=[], string $index_name = 'test_ik'): mixed
     {
         // 可以灵活添加新字段,最好不要乱添加
         $params = [
             'index' => $index_name,
-            'type' => $type_name,
             'id' => $id,
             'body' => ['doc' => $body]
         ];
@@ -180,15 +172,13 @@ class Es extends BaseComponents
      * 删除文档
      * @param int $id
      * @param string $index_name
-     * @param string $type_name
      * @return mixed
      * @throws Exception
      */
-    public function deleteDoc(int $id = 1, string $index_name = 'test_ik', string $type_name = 'test_type'): mixed
+    public function deleteDoc(int $id = 1, string $index_name = 'test_ik'): mixed
     {
         $params = [
             'index' => $index_name,
-            'type' => $type_name,
             'id' => $id
         ];
         return $this->callback(function () use ($params){
@@ -199,16 +189,14 @@ class Es extends BaseComponents
     /**
      * 搜索文档 (分页，排序，权重，过滤)
      * @param string $index_name
-     * @param string $type_name
      * @param array $body
      * @return mixed
      * @throws Exception
      */
-    public function searchDoc(string $index_name = "test_ik", string $type_name = "test_type", array $body=[]): mixed
+    public function searchDoc(string $index_name = "test_ik", array $body=[]): mixed
     {
         $params = [
             'index' => $index_name,
-            'type' => $type_name,
             'body' => $body
         ];
         return $this->callback(function () use ($params){

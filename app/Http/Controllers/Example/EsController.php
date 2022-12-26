@@ -46,7 +46,7 @@ class EsController extends Controller
 
     public function existsDoc(Request $request)
     {
-        return $this->es->existsDoc(7, 'test_ik', 'test_type');
+        return $this->es->existsDoc(7, $request->input('index_key', 'test_ik'));
     }
 
     public function addDoc(Request $request)
@@ -58,7 +58,7 @@ class EsController extends Controller
             'memo' => '嘿嘿哈哈7',
             'desc' => 'test7',
         ];
-        return $this->es->addDoc(7, $data);
+        return $this->es->addDoc(5, $data, 'weidada');
     }
 
     public function updateDoc(Request $request)
@@ -66,22 +66,22 @@ class EsController extends Controller
         $data = [
             'id' => 7,
             'name' => 'weidada7-1',
-            'age' => 18,
+            'age' => 17,
             'memo' => '嘿嘿哈哈7-1',
             'desc' => 'test7-1',
             'time' => time(),
         ];
-        return $this->es->updateDoc(7, $data);
+        return $this->es->updateDoc(7, $data, 'weidada');
     }
 
     public function deleteDoc(Request $request)
     {
-        return $this->es->deleteDoc(2);
+        return $this->es->deleteDoc(5, 'weidada');
     }
 
     public function getDoc(Request $request)
     {
-        return $this->es->getDoc(7);
+        return $this->es->getDoc(7, 'weidada');
     }
 
     public function searchDoc(Request $request)
@@ -108,7 +108,7 @@ class EsController extends Controller
                 ]
             ]
         ];
-        $response = $this->es->searchDoc('test_ik', 'test_type', $body);
+        $response = $this->es->searchDoc('weidada', $body);
         $data = array_column($response['hits']['hits'], '_source');
 //        printf("Total docs: %d\n", $response['hits']['total']['value']);
 //        printf("Max score : %.4f\n", $response['hits']['max_score']);
