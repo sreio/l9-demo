@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 
+use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -50,7 +51,7 @@ class ExceptionReport
         AuthenticationException::class => ['未授权', 401],
         AuthorizationException::class => ['没有此权限', 403],
         QueryException::class => ['参数错误', 401],
-
+        Exception::class => [],
     ];
 
     /**
@@ -100,6 +101,9 @@ class ExceptionReport
         if ($this->throwable instanceof ValidationException) {
             $error = $this->throwable->errors();
             return $this->failed($error, $this->throwable->status);
+        }
+        if ($this->throwable instanceof Exception) {
+            return $this->failed($this->throwable->getMessage());
         }
         $report = $this->doReport[$this->report];
         return $this->failed($report[0], $report[1]);
