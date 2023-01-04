@@ -27,6 +27,7 @@ Route::post('/login', [AuthController::class, 'login']); //登陆
 
 // 示例
 Route::namespace('Example')->prefix('example')->group(function (){
+    Route::get('doc', [ExampleController::class, 'doc']);
     Route::get('ok', [ExampleController::class, 'ok']);
     Route::get('err', [ExampleController::class, 'err']);
     Route::get('test', [ExampleController::class, 'test']);
