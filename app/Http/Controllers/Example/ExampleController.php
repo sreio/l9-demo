@@ -21,7 +21,7 @@ use OpenApi\Generator;
  *   @OA\Property(property="data", type="object", description="数据", default=null),
  * )
  *
- * @OA\SecurityScheme(type="http", securityScheme="bearer", scheme="bearer", bearerFormat="JWT")
+ * @OA\SecurityScheme(type="http", securityScheme="bearer", scheme="bearer", bearerFormat="JWT", in="header", name="x-api-token", description="接口token"),
  *
  *
  */
@@ -52,6 +52,7 @@ class ExampleController extends Controller
      *     path="/api/example/test2",
      *     tags={"测试API"},
      *     summary="返回测试",
+     *     security={{"bearer": {}}},
      *     @OA\Parameter(name="id", in="query", @OA\Schema(type="integer"), description="id"),
      *     @OA\Response(
      *         response="200",

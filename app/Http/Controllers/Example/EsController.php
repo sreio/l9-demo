@@ -20,8 +20,36 @@ class EsController extends Controller
     }
 
     /**
-     * es基本信息
-     * @return array
+     * @OA\Get(
+     *     path="/api/es/info",
+     *     tags={"es API"},
+     *     summary="es基本信息",
+     *     @OA\Parameter(name="id", in="query", @OA\Schema(type="integer"), description="id"),
+     *     @OA\Response(
+     *         response="200",
+     *         description="ok",
+     *         @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  allOf={
+     *                      @OA\Schema(ref="#/components/schemas/apiResuponse"),
+     *                      @OA\Schema(
+     *                          @OA\Property(property="data", type="string",
+     *                              @OA\Property(property="id", type="integer", description="id"),
+     *                              @OA\Property(property="number", type="integer", description="数字"),
+     *                              @OA\Property(property="str", type="string", description="字符串"),
+     *                              @OA\Property(property="list", type="array", description="列表", @OA\Items(type="object",
+     *                                  @OA\Property(property="a", type="string", description="a"),
+     *                                  @OA\Property(property="b", type="string", description="b"),
+     *                              )),
+     *                          )
+     *                      )
+     *                  }
+     *              )
+     *         )
+     *     )
+     * )
      */
     public function info(): array
     {
