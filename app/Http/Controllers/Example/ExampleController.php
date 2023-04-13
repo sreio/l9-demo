@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Example;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\Test;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ class ExampleController extends Controller
 {
     #[ArrayShape(['request' => "array", 'auth' => "array"])] public function test(Request $request): array
     {
+        Test::dispatch("weidada");
         $sql = User::query()->where('name', 'like', "%w%")->get();
         $params = $request->all();
         $auth = ['By' => 'sreio' , 'sex' => 1];
